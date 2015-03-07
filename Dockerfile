@@ -8,7 +8,7 @@ RUN \
     libsndfile1-dev \
     libpulse-dev \
     libvorbis-dev \
-    libmp3lame-dev & \
+    libmp3lame-dev && \
   wget http://iweb.dl.sourceforge.net/project/e-guidedog/Ekho/6.0/ekho-6.0.tar.xz && \
   tar xvf ekho-6.0.tar.xz && \
   cd ekho-6.0 && \
