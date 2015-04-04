@@ -1,14 +1,16 @@
-FROM dockerfile/ubuntu
+FROM ubuntu:14.04
 MAINTAINER Zhike Chan "zk.chan007@gmail.com"
-ENV REFRESHED_AT 2015-3-7
+ENV REFRESHED_AT 2015-4-4
+
+#COPY ekho-6.0/ /ekho-6.0
 
 RUN \
+  buildDeps='build-essential  wget' && \
+  buildLibDeps='libsndfile1-dev libpulse-dev libvorbis-dev libmp3lame-dev' && \
+  set -x && \
   apt-get update && \
-  apt-get install -qqy \
-    libsndfile1-dev \
-    libpulse-dev \
-    libvorbis-dev \
-    libmp3lame-dev && \
+  apt-get install -y $buildDeps && \
+  apt-get install -y $buildLibDeps && \
   wget http://iweb.dl.sourceforge.net/project/e-guidedog/Ekho/6.0/ekho-6.0.tar.xz && \
   tar xvf ekho-6.0.tar.xz && \
   cd ekho-6.0 && \
@@ -18,7 +20,8 @@ RUN \
   cd .. && \
   rm ekho-6.0.tar.xz && \
   rm -rf ekho-6.0 && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get purge -y --auto-remove $buildDeps
 
 ENTRYPOINT ["ekho"]
 CMD ["-h"]
